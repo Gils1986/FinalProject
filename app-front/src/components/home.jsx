@@ -61,7 +61,6 @@ const Home = () => {
         product["productPrice"] >= arrPriceRange[0] &&
         product["productPrice"] <= arrPriceRange[1]
     );
-    console.log("arrFilteredProducts=", arrFilteredProducts);
     setFilteredProducts(arrFilteredProducts);
     setPriceRange(event.target.value);
   };
@@ -77,7 +76,6 @@ const Home = () => {
   };
 
   const filterProducts = (val) => {
-    console.log("filter by:", val);
     setProductsFilter(val);
   };
 
@@ -86,20 +84,6 @@ const Home = () => {
   const handleShow = () => {
     setShowFavorites(true);
   };
-
-  // if (products) {
-  //     if (filterBy !== "productPrice") {
-  //       // Filter products if user entered text in the search field
-  //       if (productsFilter.trim().length > 0) {
-  //         let arrFilteredProducts = products.filter((product) =>
-  //           product[filterBy].toLowerCase().includes(productsFilter.toLowerCase())
-  //         );
-  //         setFilteredProducts(arrFilteredProducts);
-  //       }
-  //     }
-  // }
-
-  console.log("refresh");
 
   return (
     <>
@@ -159,7 +143,7 @@ const Home = () => {
           </div>
         ) : null}
         {user?.biz ? (
-          <Link className="row" to="/createProduct">
+          <Link style={{color: "black"}} className="row" to="/createProduct">
             Create Product
           </Link>
         ) : null}
@@ -173,17 +157,18 @@ const Home = () => {
           ))
         )}
       </div>
-
-      <Modal show={showFavorites} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Favorite Products</Modal.Title>
-        </Modal.Header>
-        <div>
-          {favoriteProducts.map((product) => {
-            return <Product product={product} key={product._id} />;
-          })}
-        </div>
-      </Modal>
+      {user ? (
+        <Modal show={showFavorites} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Favorite Products</Modal.Title>
+          </Modal.Header>
+          <div>
+            {favoriteProducts.map((product) => {
+              return <Product product={product} key={product._id} />;
+            })}
+          </div>
+        </Modal>
+      ) : null}
     </>
   );
 };

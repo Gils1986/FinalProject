@@ -6,6 +6,8 @@ import { formikValidateUsingJoi } from "../utils/formikValidateUsingJoi";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import productService from "../services/productService";
+import { toast } from "react-toastify";
+import {toastStyle} from "../utils/toastify"
 
 const CreateProduct = () => {
   const [error, setError] = useState("");
@@ -18,7 +20,7 @@ const CreateProduct = () => {
       productName: "",
       productDescription: "",
       productPrice: "",
-      productQuantity: "",
+      // productQuantity: "",
       productImage: "",
     },
     validate: formikValidateUsingJoi({
@@ -29,23 +31,22 @@ const CreateProduct = () => {
         .required()
         .label("Description"),
       productPrice: Joi.number().min(1).max(99999).required().label("Price"),
-      productQuantity: Joi.number()
-        .min(1)
-        .max(999999)
-        .required()
-        .label("Quantity"),
+      // productQuantity: Joi.number()
+      //   .min(1)
+      //   .max(999999)
+      //   .required()
+      //   .label("Quantity"),
       productImage: Joi.string().min(11).max(1024).allow("").label("Image"),
     }),
 
     async onSubmit(values) {
       try {
-        console.log("aaaaaaaa");
         const { productImage, ...body } = values;
         if (productImage) {
           body.productImage = productImage;
         }
-        console.log("create card body:", body);
         await productService.createProduct(body);
+        toast.success(`Product ${body.productName} created`, toastStyle);
         navigate("/");
       } catch ({ response }) {
         if (response && response.status === 400) {
@@ -54,10 +55,6 @@ const CreateProduct = () => {
       }
     },
   });
-
-  // if (user) {
-  //   return <Navigate to="/" />;
-  // }
 
   return (
     <>
@@ -87,13 +84,13 @@ const CreateProduct = () => {
           label="Price"
           required
         />
-        <Input
+        {/* <Input
           {...form.getFieldProps("productQuantity")}
           error={form.touched.productQuantity && form.errors.productQuantity}
           type="number"
           label="Quantity"
           required
-        />
+        /> */}
         <Input
           {...form.getFieldProps("productImage")}
           error={form.touched.productImage && form.errors.productImage}

@@ -8,7 +8,7 @@ export const useGetProducts = (onlyFavorites = false) => {
   const { user } = useAuth();
 
   useEffect(() => {
-    let getProducts;
+    let getProducts = () => {};
     if (onlyFavorites) {
       getProducts = async () => {
         const { data } = await userService.getFavoriteProducts();

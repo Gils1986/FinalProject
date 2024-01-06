@@ -14,11 +14,13 @@ import CreateProduct from "./components/createProduct.jsx";
 import DeleteProduct from "./components/deleteProduct";
 import EditProduct from "./components/editProduct";
 import ShowProduct from "./components/showProduct";
-import FavoritesProductsModal from "./components/favoriteProductsModal";
 
 function App() {
   return (
-    <div className="app d-flex flex-column min-vh-100">
+    <div
+      className="app d-flex flex-column min-vh-100"
+      style={{ backgroundColor: "#FAEBD7" }}
+    >
       <ToastContainer />
       <header>
         <Navbar />
@@ -30,7 +32,6 @@ function App() {
           <Route path="signUp" element={<SignUp redirect="/" />} />
           <Route path="signIn" element={<SignIn redirect="/" />} />
           <Route path="signOut" element={<SignOut redirect="/" />} />
-          <Route path="favorites" element={<FavoritesProductsModal />} />
           <Route
             path="createProduct"
             element={

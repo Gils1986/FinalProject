@@ -7,6 +7,8 @@ import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import CheckBox from "./checkbox";
 import { useAuth } from "../context/auth.context";
+import { toast } from "react-toastify";
+import { toastStyle } from "../utils/toastify";
 
 const SignUp = ({ redirect = "/" }) => {
   const [error, setError] = useState("");
@@ -48,6 +50,7 @@ const SignUp = ({ redirect = "/" }) => {
       try {
         await createUser(values);
         await login({ email: values.email, password: values.password });
+        toast.success(`${values.email} Signed up successfully`, toastStyle);
         navigate(redirect);
       } catch ({ response }) {
         if (response && response.status === 400) {

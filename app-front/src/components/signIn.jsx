@@ -6,6 +6,8 @@ import { formikValidateUsingJoi } from "../utils/formikValidateUsingJoi";
 import { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
 import { useAuth } from "../context/auth.context";
+import { toast } from "react-toastify";
+import { toastStyle } from "../utils/toastify";
 
 const SignIn = ({ redirect = "/" }) => {
   const [error, setError] = useState("");
@@ -33,6 +35,7 @@ const SignIn = ({ redirect = "/" }) => {
     async onSubmit(values) {
       try {
         await login(values);
+        toast.success(`${values.email} Signed up successfully`, toastStyle);
         navigate(redirect);
       } catch ({ response }) {
         if (response && response.status === 400) {

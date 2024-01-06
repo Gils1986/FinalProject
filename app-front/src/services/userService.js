@@ -23,7 +23,6 @@ export async function loginUser(credentials) {
 
 export function logout() {
   localStorage.removeItem(TOKEN_KEY);
-  setTokenHeader();
 }
 
 export function getJWT() {

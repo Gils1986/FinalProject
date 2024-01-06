@@ -8,6 +8,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import productService from "../services/productService";
 import useProduct from "../hooks/useProduct";
 import { toast } from "react-toastify";
+import { toastStyle } from "../utils/toastify";
 
 const EditProduct = () => {
   const [error, setError] = useState("");
@@ -22,7 +23,7 @@ const EditProduct = () => {
       productName: "",
       productDescription: "",
       productPrice: "",
-      productQuantity: "",
+      // productQuantity: "",
       productImage: "",
     },
     validate: formikValidateUsingJoi({
@@ -33,11 +34,11 @@ const EditProduct = () => {
         .required()
         .label("Description"),
       productPrice: Joi.number().min(1).max(99999).required().label("Price"),
-      productQuantity: Joi.number()
-        .min(1)
-        .max(999999)
-        .required()
-        .label("Quantity"),
+      // productQuantity: Joi.number()
+      //   .min(1)
+      //   .max(999999)
+      //   .required()
+      //   .label("Quantity"),
       productImage: Joi.string().min(11).max(1024).allow("").label("Image"),
     }),
 
@@ -47,9 +48,8 @@ const EditProduct = () => {
         if (productImage) {
           body.productImage = productImage;
         }
-        console.log("In editCard.submit(). id=", id, "body=", body);
         productService.updateProduct(id, body);
-        toast("The card was edited");
+        toast.success(`Product ${body.productName} edited`, toastStyle);
         navigate("/");
       } catch ({ response }) {
         if (response && response.status === 400) {
@@ -65,7 +65,7 @@ const EditProduct = () => {
       productName,
       productDescription,
       productPrice,
-      productQuantity,
+      // productQuantity,
       productImage,
     } = product;
 
@@ -73,7 +73,7 @@ const EditProduct = () => {
       productName,
       productDescription,
       productPrice,
-      productQuantity,
+      // productQuantity,
       productImage,
     });
   }, [product]);
@@ -106,13 +106,13 @@ const EditProduct = () => {
           label="Price"
           required
         />
-        <Input
+        {/* <Input
           {...form.getFieldProps("productQuantity")}
           error={form.touched.productQuantity && form.errors.productQuantity}
           type="number"
           label="Phone"
           required
-        />
+        /> */}
         <Input
           {...form.getFieldProps("productImage")}
           error={form.touched.productImage && form.errors.productImage}

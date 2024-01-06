@@ -8,7 +8,7 @@ const PageHeader = ({ title, description }) => {
       {description && (
         <div className="row mt-2">
           <div className="col-12">
-            <p>{description}</p>
+            <h3>{description}</h3>
           </div>
         </div>
       )}
