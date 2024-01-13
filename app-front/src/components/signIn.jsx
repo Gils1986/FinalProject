@@ -29,7 +29,19 @@ const SignIn = ({ redirect = "/" }) => {
         .required()
         .email({ tlds: { allow: false } })
         .label("Email"),
-      password: Joi.string().min(6).max(255).required().label("Password"),
+      password: Joi.string()
+        .min(6)
+        .max(255)
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_])(?=(.*\d){4,})[a-zA-Z!@%$#^&*\-_\d]{8,}$/
+        )
+        .required()
+        .label("Password")
+        .messages({
+          "string.pattern.base": `The password must contain at least one uppercase letter, one lowercase
+      letter, 4 numbers, 1 special character (!@%$#^&*) and a minimum of 8
+      characters`,
+        }),
     }),
 
     async onSubmit(values) {

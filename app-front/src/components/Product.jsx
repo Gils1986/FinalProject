@@ -53,7 +53,7 @@ const Product = ({ product }) => {
               />
               <label className="form-check-label">Favorites</label>
               <Link to={`/showProduct/${_id}`} className="card-link mx-5">
-                show
+                View
               </Link>
             </div>
           </li>

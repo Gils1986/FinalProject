@@ -3,8 +3,8 @@ import PageHeader from "./common/pageHeader";
 const About = () => {
   return (
     <>
-      <PageHeader title={"The Perfect Gift"} description={"about"} />
-      <p>
+      <PageHeader title={"The Perfect Gift"} description={"About Us"} />
+      <p className="mt-4">
         {" "}
         The website "The Perfect Gift" has been around for over 20 years and
         provides a variety of gifts at different price levels for all types of

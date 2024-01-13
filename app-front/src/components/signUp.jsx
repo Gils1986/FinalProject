@@ -37,6 +37,9 @@ const SignUp = ({ redirect = "/" }) => {
         .min(6)
         .max(255)
         .required()
+        .regex(
+          /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@%$#^&*\-_])(?=(.*\d){4,})[a-zA-Z!@%$#^&*\-_\d]{8,}$/
+        )
         .label("Password")
         .messages({
           "string.pattern.base": `The password must contain at least one uppercase letter, one lowercase

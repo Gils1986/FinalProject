@@ -90,12 +90,12 @@ const Home = () => {
 
   return (
     <>
-      <PageHeader title={"The Perfect Gift"} description={"home page"} />
-      <div className="container">
+      <PageHeader title={"The Perfect Gift"} description={""} />
+      <div className="container mt-4">
         <div className="row">
           {filterBy !== "productPrice" ? (
             <input
-              className="col-sm-4"
+              className="col-sm-2"
               type="search"
               placeholder={"Search by " + filterByPrettyName}
               aria-label="Search"
@@ -104,7 +104,7 @@ const Home = () => {
             />
           ) : (
             <select
-              className="col-sm-4"
+              className="col-sm-2"
               value={priceRange}
               onChange={handleChangePriceRange}
             >
@@ -120,11 +120,13 @@ const Home = () => {
           )}
 
           {isAdvancedFilter && (
+            
             <select
-              className="col-sm-4 mx-2"
+              className="col-sm-2 mx-2"
               value={filterBy}
               onChange={handleChangeFilterBy}
             >
+              <br/>
               <option value="productName">Name</option>
               <option value="productDescription">Description</option>
               <option value="productPrice">Price</option>
@@ -134,24 +136,34 @@ const Home = () => {
           <button
             onClick={(e) => handleChangeAdvancedFilter()}
             style={{ width: "110px" }}
-            className="btn btn-primary mx-1"
+            className="mx-1"
           >
             {isAdvancedFilter ? "Minimal" : "Advanced"}
           </button>
-        </div>
+          <div className="col-sm-6 d-flex justify-content-end align-items-center">
+            {user ? (
+              <>
+                <button onClick={handleShow} className="mx-1">
+                  Show Favorites
+                </button>
+              </>
+            ) : null}
 
-        {user ? (
-          <div>
-            <button onClick={handleShow}>Show Favorites</button>
+            <button onClick={handleDisplayTable} className="mx-1">
+              Change Display
+            </button>
           </div>
-        ) : null}
+        </div>
         {user?.biz ? (
-          <Link style={{ color: "black" }} className="row" to="/createProduct">
+          <Link
+            style={{ color: "black" }}
+            className="row mt-3"
+            to="/createProduct"
+          >
             Create Product
           </Link>
         ) : null}
       </div>
-      <button onClick={handleDisplayTable}>Change Display</button>
       {displayTable ? (
         <table className="table mt-4">
           <thead>
@@ -161,7 +173,6 @@ const Home = () => {
               <th scope="col">Name</th>
               <th scope="col">Description</th>
               <th scope="col">Price</th>
-              <th scope="col">Operation</th>
             </tr>
           </thead>
           <tbody>
