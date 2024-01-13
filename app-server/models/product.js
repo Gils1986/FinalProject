@@ -21,12 +21,6 @@ const productSchema = new mongoose.Schema({
     minlength: 1,
     maxlength: 99999,
   },
-  // productQuantity: {
-  //   type: Number,
-  //   required: true,
-  //   minlength: 1,
-  //   maxlength: 999999,
-  // },
   productImage: {
     type: String,
     required: true,
@@ -50,7 +44,6 @@ function validateProduct(product) {
     productName: Joi.string().min(2).max(255).required(),
     productDescription: Joi.string().min(2).max(1024).required(),
     productPrice: Joi.number().min(1).max(99999).required(),
-    // productQuantity: Joi.number().min(1).max(999999).required(),
     productImage: Joi.string().min(11).max(1024),
   });
 

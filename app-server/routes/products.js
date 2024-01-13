@@ -16,14 +16,7 @@ router.get("/", auth, async (req, res) => {
   }
 
   let products = await Product.find();
-
-  // console.log("Cards before change:", cards);
-
-  //const user = await User.findById({_id: req.})
   const user = await User.findById(req.user._id);
-  console.log("user:", user);
-  //cards.map((card) => card._id === user.fa);
-  //card.isFavorite = true
   products = products.map((product) => {
     return {
       ...product._doc,
@@ -31,15 +24,11 @@ router.get("/", auth, async (req, res) => {
     };
   });
 
-  // console.log("Cards after change:", cards);
-
   res.send(products);
 });
 
 router.get("/guest", async (req, res) => {
   let products = await Product.find();
-
-  // console.log("Cards after change:", cards);
 
   res.send(products);
 });
@@ -47,12 +36,11 @@ router.get("/guest", async (req, res) => {
 router.delete("/:id", auth, async (req, res) => {
   const product = await Product.findOneAndRemove({
     _id: req.params.id,
-    // user_id: req.user._id,
   });
   if (!product)
     return res
       .status(404)
-      .send("(1) The product with the given ID was not found.");
+      .send("The product with the given ID was not found.");
   return res.send(product);
 });
 
@@ -68,12 +56,10 @@ router.put("/:id", auth, async (req, res) => {
     }
   );
 
-  // console.log("updated card: ", card);
-
   if (!product)
     return res
       .status(404)
-      .send("(2) The product with the given ID was not found.");
+      .send("The product with the given ID was not found.");
 
   return res.send(product);
 });
@@ -85,7 +71,7 @@ router.get("/:id", auth, async (req, res) => {
   if (!product)
     return res
       .status(404)
-      .send("(3) The product with the given ID was not found.");
+      .send("The product with the given ID was not found.");
   return res.send(product);
 });
 

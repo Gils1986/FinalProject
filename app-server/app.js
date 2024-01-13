@@ -7,9 +7,10 @@ const http = require("http").Server(app);
 const mongoose = require("mongoose");
 const morgan = require("morgan");
 const cors = require("cors");
+const config = require("config");
 
 mongoose
-  .connect("mongodb://127.0.0.1/my_products_api")
+  .connect(config.get("mongoDB.MONGO_URI"))
   .then(() => console.log("Connected to MongoDB..."))
   .catch((err) => console.error("Could not connect to MongoDB..."));
 
@@ -21,5 +22,6 @@ app.use("/api/users", users);
 app.use("/api/auth", auth);
 app.use("/api/products", products);
 
-const port = 3900;
-http.listen(port, () => console.log(`Listening on port ${port}...`));
+http.listen(config.get("server.PORT"), () =>
+  console.log(`Listening on port ${config.get("server.PORT")}...`)
+);

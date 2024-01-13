@@ -7,7 +7,6 @@ export const useProduct = (id) => {
   useEffect(() => {
     const getProduct = async () => {
       const { data } = await productService.getProduct(id);
-      console.log("In useCard: data=", data);
       setProduct(data);
     };
     getProduct();

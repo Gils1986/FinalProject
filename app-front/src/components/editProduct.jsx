@@ -23,7 +23,6 @@ const EditProduct = () => {
       productName: "",
       productDescription: "",
       productPrice: "",
-      // productQuantity: "",
       productImage: "",
     },
     validate: formikValidateUsingJoi({
@@ -34,11 +33,6 @@ const EditProduct = () => {
         .required()
         .label("Description"),
       productPrice: Joi.number().min(1).max(99999).required().label("Price"),
-      // productQuantity: Joi.number()
-      //   .min(1)
-      //   .max(999999)
-      //   .required()
-      //   .label("Quantity"),
       productImage: Joi.string().min(11).max(1024).allow("").label("Image"),
     }),
 
@@ -65,7 +59,6 @@ const EditProduct = () => {
       productName,
       productDescription,
       productPrice,
-      // productQuantity,
       productImage,
     } = product;
 
@@ -73,7 +66,6 @@ const EditProduct = () => {
       productName,
       productDescription,
       productPrice,
-      // productQuantity,
       productImage,
     });
   }, [product]);
@@ -106,13 +98,6 @@ const EditProduct = () => {
           label="Price"
           required
         />
-        {/* <Input
-          {...form.getFieldProps("productQuantity")}
-          error={form.touched.productQuantity && form.errors.productQuantity}
-          type="number"
-          label="Phone"
-          required
-        /> */}
         <Input
           {...form.getFieldProps("productImage")}
           error={form.touched.productImage && form.errors.productImage}

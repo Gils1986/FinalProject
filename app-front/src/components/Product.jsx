@@ -3,29 +3,29 @@ import userService from "../services/userService";
 import { useState } from "react";
 import { useAuth } from "../context/auth.context";
 
-const Product = ({
-  product: {
+const Product = ({ product }) => {
+  const {
     _id,
     productName,
     productDescription,
     productPrice,
-    productQuantity,
     productImage,
     isFavorite,
-  },
-}) => {
-  const { user } = useAuth();
+  } = product;
+
+  const { user, setFavoritesP, getFavProducts } = useAuth();
   const [isFavoriteProduct, setIsFavoriteProduct] = useState(isFavorite);
 
-  const handleChange = (e) => {
-    console.log("Is favorite card?", e.target.checked);
+  const handleChange = async (e) => {
     if (e.target.checked) {
-      userService.addFavoriteProduct(_id);
+      await userService.addFavoriteProduct(_id);
       setIsFavoriteProduct(true);
     } else {
-      userService.removeFavoriteProduct(_id);
+      await userService.removeFavoriteProduct(_id);
       setIsFavoriteProduct(false);
     }
+    const favP = await getFavProducts();
+    setFavoritesP(favP);
   };
 
   return (
@@ -42,7 +42,6 @@ const Product = ({
       </div>
       <ul className="list-group list-group-flush">
         <li className="list-group-item">{productPrice} NIS</li>
-        {/* <li className="list-group-item">Quantity: {productQuantity}</li> */}
         {user ? (
           <li className="list-group-item">
             <div className="form-check my-1">

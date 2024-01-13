@@ -15,10 +15,10 @@ const Home = () => {
   const [isAdvancedFilter, setIsAdvanceFilter] = useState(false);
   const [priceRange, setPriceRange] = useState("placeholder");
 
-  const { user } = useAuth();
+  const { user, favoritesP } = useAuth();
   const products = useGetProducts();
   const [showFavorites, setShowFavorites] = useState(false);
-  const favoriteProducts = useGetProducts(true);
+  const [displayTable, setDisplayTable] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
 
   useEffect(() => {
@@ -51,7 +51,6 @@ const Home = () => {
   };
 
   const handleChangePriceRange = (event) => {
-    console.log("Selected price range value:", event.target.value);
     const priceRangeStr = event.target.value;
     const arrPriceRange = getPriceRangeFromString(priceRangeStr);
     let arrFilteredProducts = [...products];
@@ -83,6 +82,10 @@ const Home = () => {
 
   const handleShow = () => {
     setShowFavorites(true);
+  };
+
+  const handleDisplayTable = () => {
+    setDisplayTable((val) => !val);
   };
 
   return (
@@ -143,27 +146,61 @@ const Home = () => {
           </div>
         ) : null}
         {user?.biz ? (
-          <Link style={{color: "black"}} className="row" to="/createProduct">
+          <Link style={{ color: "black" }} className="row" to="/createProduct">
             Create Product
           </Link>
         ) : null}
       </div>
-      <div className="row">
-        {!filteredProducts || !filteredProducts.length ? (
-          <p>no products...</p>
-        ) : (
-          filteredProducts.map((product) => (
-            <Product key={product._id} product={product} />
-          ))
-        )}
-      </div>
+      <button onClick={handleDisplayTable}>Change Display</button>
+      {displayTable ? (
+        <table className="table mt-4">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Image</th>
+              <th scope="col">Name</th>
+              <th scope="col">Description</th>
+              <th scope="col">Price</th>
+              <th scope="col">Operation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredProducts.map((product, index) => (
+              <tr key={product._id}>
+                <th scope="row">{index + 1}</th>
+                <td>
+                  <img
+                    style={{ maxHeight: "80px" }}
+                    className="img-fluid"
+                    src={product.productImage}
+                    alt={product.productName}
+                  />
+                </td>
+                <td>{product.productName}</td>
+                <td>{product.productDescription}</td>
+                <td>{product.productPrice} NIS</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      ) : (
+        <div className="row">
+          {!filteredProducts || !filteredProducts.length ? (
+            <p>no products...</p>
+          ) : (
+            filteredProducts.map((product, index) => (
+              <Product key={product._id} product={product} />
+            ))
+          )}
+        </div>
+      )}
       {user ? (
         <Modal show={showFavorites} onHide={handleClose}>
           <Modal.Header closeButton>
             <Modal.Title>Favorite Products</Modal.Title>
           </Modal.Header>
           <div>
-            {favoriteProducts.map((product) => {
+            {favoritesP?.map((product) => {
               return <Product product={product} key={product._id} />;
             })}
           </div>

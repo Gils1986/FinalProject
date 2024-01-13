@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import userService from "../services/userService";
 
 const fn_error_context_must_be_used = () => {
@@ -12,11 +12,29 @@ export const authContext = createContext({
   login: fn_error_context_must_be_used,
   createUser: fn_error_context_must_be_used,
   user: null,
+  favoritesP: null,
+  setFavoritesP: fn_error_context_must_be_used,
+  getFavProducts: fn_error_context_must_be_used,
 });
 authContext.displayName = "auth";
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(userService.getUser());
+
+  const [favoritesP, setFavoritesP] = useState([]);
+
+  useEffect(() => {
+    async function getFavs() {
+      const favP = await getFavProducts();
+      setFavoritesP(favP);
+    }
+    getFavs();
+  }, []);
+
+  async function getFavProducts() {
+    const { data } = await userService.getFavoriteProducts();
+    return data;
+  }
 
   const refreshUser = () => setUser(userService.getUser());
 
@@ -35,7 +53,15 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <authContext.Provider
-      value={{ login, logout, user, createUser: userService.createUser }}
+      value={{
+        login,
+        logout,
+        user,
+        createUser: userService.createUser,
+        favoritesP,
+        setFavoritesP,
+        getFavProducts,
+      }}
     >
       {children}
     </authContext.Provider>

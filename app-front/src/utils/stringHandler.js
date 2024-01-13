@@ -4,7 +4,6 @@ function isStringAnInteger(str) {
 
 export function getPriceRangeFromString(str) {
   const prices = str.split("-");
-  console.log("prices:", prices);
   if (prices.length !== 2) {
     return [];
   }

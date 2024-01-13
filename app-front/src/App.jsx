@@ -1,5 +1,4 @@
 import "react-toastify/dist/ReactToastify.css";
-import "./App.css";
 import { ToastContainer } from "react-toastify";
 import About from "./components/about";
 import Footer from "./components/footer";

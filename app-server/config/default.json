@@ -1,3 +1,11 @@
 {
-  "jwtKey": "YourPrivateKey"
+  "mongoDB": {
+    "MONGO_URI": "mongodb://127.0.0.1/my_products_api"
+  },
+  "server": {
+    "PORT": 3900
+  },
+  "auth": {
+    "JWT_SECRET": "MYSECRET"
+  }
 }

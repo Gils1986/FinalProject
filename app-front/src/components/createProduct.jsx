@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import productService from "../services/productService";
 import { toast } from "react-toastify";
-import {toastStyle} from "../utils/toastify"
+import { toastStyle } from "../utils/toastify";
 
 const CreateProduct = () => {
   const [error, setError] = useState("");
@@ -20,7 +20,6 @@ const CreateProduct = () => {
       productName: "",
       productDescription: "",
       productPrice: "",
-      // productQuantity: "",
       productImage: "",
     },
     validate: formikValidateUsingJoi({
@@ -31,11 +30,6 @@ const CreateProduct = () => {
         .required()
         .label("Description"),
       productPrice: Joi.number().min(1).max(99999).required().label("Price"),
-      // productQuantity: Joi.number()
-      //   .min(1)
-      //   .max(999999)
-      //   .required()
-      //   .label("Quantity"),
       productImage: Joi.string().min(11).max(1024).allow("").label("Image"),
     }),
 
@@ -84,13 +78,6 @@ const CreateProduct = () => {
           label="Price"
           required
         />
-        {/* <Input
-          {...form.getFieldProps("productQuantity")}
-          error={form.touched.productQuantity && form.errors.productQuantity}
-          type="number"
-          label="Quantity"
-          required
-        /> */}
         <Input
           {...form.getFieldProps("productImage")}
           error={form.touched.productImage && form.errors.productImage}
